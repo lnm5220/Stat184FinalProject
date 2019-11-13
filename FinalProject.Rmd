@@ -1,0 +1,13 @@
+---
+title: "Stat 184 Final Project"
+author: "Leah Miller"
+output: html_notebook
+---
+
+
+
+### Import the data
+
+```{r}
+plot(cars)
+```
