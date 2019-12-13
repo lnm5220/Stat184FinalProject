@@ -1,0 +1,129 @@
+---
+title: 'Stat 184 Final Project'
+author: "Leah Miller"
+date: "Due December 16, 2019"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+
+## Set up
+### Clean up environment & load packages
+```{r}
+# clean up the RStudio environment 
+rm(list = ls())
+library(rvest)
+library(tidyverse)
+library(lubridate)
+library(knitr)
+library(ggplot2)
+library(DataComputing)
+library(data.table)
+```
+
+## Import The Data
+- I chose to use data regarding healthcare. The first dataset is insurance costs from different Americans. The second dataset is google searches of health conditions.
+
+```{r}
+insuranceData = read.csv("insurance.csv")
+googleData = read.csv("RegionalInterestByConditionOverTime.csv")
+```
+
+
+## Exploratory Data Analysis
+- First, I will explore the insurance data. I start this process by viewing the first 6 records.
+```{r}
+head(insuranceData, 6)
+```
+
+
+- Next I will plot some graphs to see the trends within insurance data.
+
+
+```{r}
+costbyRegion <- ggplot(insuranceData, aes(x = region, y = charges)) +
+  geom_boxplot() + geom_boxplot(fill = "#4271AE", alpha = .7) + theme_bw()
+
+costbyRegion
+```
+
+
+
+```{r} 
+facetCosts <- ggplot(data=insuranceData,aes(x=age,y=charges))+geom_point()+aes(colour=smoker)+scale_x_log10()+facet_wrap(~region,ncol=4) 
+### add captions
+
+facetCosts
+```
+
+
+- Next I will explore the google data. I will simply start by viewing the data table.
+
+```{r}
+head(googleData,6)
+```
+
+- I quickly realized that this data was formatted in a way that is not useful. Before I begin to explore the data further using plots, first I must extract the most recent search data (2017).
+
+```{r}
+CleanGoogleData <-
+  googleData %>% 
+  select(dma, geoCode, X2017.cancer, X2017.cardiovascular, X2017.depression, X2017.stroke, X2017.rehab, X2017.vaccine, X2017.obesity, X2017.diarrhea)
+
+```
+
+
+- Next I will use regular expressions to extract the State Abbreviation from the location. Then I use mutate to apply the regular expression to all of the addresses. At this point I also drop the "geoCode" column because it is not needed.
+
+```{r}
+address <- "Philadelphia PA"
+
+stateAbbr <- str_extract(address, "\\b[A-Z]{2}")
+
+CleanGoogleData <- CleanGoogleData %>% 
+  select(-geoCode) %>% 
+  mutate(dma = str_extract(dma, "\\b[A-Z]{2}"))
+
+head(CleanGoogleData, 6)
+```
+
+
+- Our data is almost clean. Since all of this data is from 2017 I am going to reformat year into its own column. Then, I will add a column called "region" to the google data. This will be useful when comparing this data to the insurance data which is also grouped by region.
+
+```{r}
+gatheredData <- melt(CleanGoogleData, id.vars = "dma", variable = 'condition')
+gatheredData <- gatheredData %>% 
+  mutate(year = '2017') %>% 
+  mutate(condition = gsub('X2017.','',condition))
+
+head(gatheredData, 6)
+```
+
+- Here is some analysis of the 2017 google data.
+
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
