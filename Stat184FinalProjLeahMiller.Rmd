@@ -1,17 +1,18 @@
 ---
-title: 'Stat 184 Final Project'
+title: "Stat 184 Final Project"
 author: "Leah Miller"
 date: "Due December 16, 2019"
 output:
-  pdf_document: default
+  html_document:
+    df_print: paged
   html_notebook: default
+  pdf_document: default
 ---
 
 
 ## Set up
 ### Clean up environment & load packages
 ```{r}
-# clean up the RStudio environment 
 rm(list = ls())
 library(rvest)
 library(tidyverse)
@@ -37,9 +38,7 @@ googleData = read.csv("RegionalInterestByConditionOverTime.csv")
 head(insuranceData, 6)
 ```
 
-
 - Next I will plot some graphs to see the trends within insurance data.
-
 
 ```{r}
 costbyRegion <- ggplot(insuranceData, aes(x = region, y = charges)) +
@@ -47,7 +46,6 @@ costbyRegion <- ggplot(insuranceData, aes(x = region, y = charges)) +
 
 costbyRegion
 ```
-
 
 
 ```{r} 
@@ -63,7 +61,8 @@ facetCosts
 ```{r}
 head(googleData,6)
 ```
-
+ 
+ ## Data Cleaning
 - I quickly realized that this data was formatted in a way that is not useful. Before I begin to explore the data further using plots, first I must extract the most recent search data (2017).
 
 ```{r}
@@ -99,11 +98,58 @@ gatheredData <- gatheredData %>%
 
 head(gatheredData, 6)
 ```
+- Now I will group by state so I can do analysis on a state level. Then, I will add a column called "region" to the google data. This will be useful when comparing this data to the insurance data which is also grouped by region.
+
+```{r}
+StateGoogleData <-
+  gatheredData %>% 
+  group_by(dma, condition) %>% 
+  summarise (total = sum(value))
+
+head(StateGoogleData, 6)
+```
+
+- *Note* There are only 4 regions included in Insurance data due to what was surveyed in the study. Due to this, I will be only including those regions for the google data so the comparison is equal. This excludes certain states like Alaska who are in the far north region. They will be labeled with an NA and then ommitted from the dataset.
+
+```{r}
+StateGoogleData <-
+  gatheredData %>% 
+  group_by(dma, condition) %>% 
+  summarise (total = sum(value))
+
+#head(StateGoogleData, 6)
+
+southwest <- c('AZ','CA','NM','NV','OK','TX')
+southeast <- c('AL','AR','DE','FL','GA','KY','LA','MD','DC','MS','MC','SC')
+northwest <- c('CA', 'CO', 'ID', 'MT', 'ND', 'NE', 'NV', 'OR', 'SD', 'UT', 'WA', 'WY')
+northeast <- c('CT','IA','IL','IN','KS','MA','ME','MI','MN','MO','NH','NJ','NY','OH','PA','RI','SD','VA','VT','WI', 'WV')
+
+RegionalGoogleData <-
+  StateGoogleData %>% 
+  mutate(region = ifelse(dma %in% southwest, "southwest",
+                                     ifelse(dma %in% southeast, "southeast",
+                                            ifelse(dma %in% northwest, "northwest",
+                                                   ifelse(dma %in% northeast, "northeast", NA)))))
+
+RegionalGoogleData <- na.omit(RegionalGoogleData)
+head(RegionalGoogleData)
+```
+
 
 - Here is some analysis of the 2017 google data.
 
 ```{r}
+# searches by state
 
+
+
+#searches by region
+RegionSearches <-
+  ggplot(data=RegionalGoogleData,aes(x=reorder(condition,total),y=total ,fill=condition))+geom_bar(stat='identity',position='stack', width=.9) + theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank()) + facet_wrap(~region,ncol=2) 
+
+RegionSearches
 ```
 
 
