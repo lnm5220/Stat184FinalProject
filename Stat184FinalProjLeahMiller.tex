@@ -1,0 +1,721 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Stat 184 Final Project},
+            pdfauthor={Leah Miller},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Stat 184 Final Project}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Leah Miller}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{Due December 16, 2019}
+
+
+\begin{document}
+\maketitle
+
+\hypertarget{set-up}{%
+\subsection{Set up}\label{set-up}}
+
+\hypertarget{clean-up-environment-load-packages}{%
+\subsubsection{Clean up environment \& load
+packages}\label{clean-up-environment-load-packages}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{rm}\NormalTok{(}\DataTypeTok{list =} \KeywordTok{ls}\NormalTok{())}
+\KeywordTok{library}\NormalTok{(rvest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: xml2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages ----------------------------------------------------- tidyverse 1.2.1 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.2.1     v purrr   0.3.3
+## v tibble  2.1.3     v dplyr   0.8.3
+## v tidyr   1.0.0     v stringr 1.4.0
+## v readr   1.3.1     v forcats 0.4.0
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts -------------------------------------------------------- tidyverse_conflicts() --
+## x dplyr::filter()         masks stats::filter()
+## x readr::guess_encoding() masks rvest::guess_encoding()
+## x dplyr::lag()            masks stats::lag()
+## x purrr::pluck()          masks rvest::pluck()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(lubridate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lubridate'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:base':
+## 
+##     date
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(knitr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(DataComputing)}
+\KeywordTok{library}\NormalTok{(data.table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'data.table'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:lubridate':
+## 
+##     hour, isoweek, mday, minute, month, quarter, second, wday,
+##     week, yday, year
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     between, first, last
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     transpose
+\end{verbatim}
+
+\hypertarget{import-the-data}{%
+\subsection{Import The Data}\label{import-the-data}}
+
+\begin{itemize}
+\tightlist
+\item
+  I chose to use data regarding healthcare. The first dataset is
+  insurance costs from different Americans. The second dataset is google
+  searches of health conditions.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{insuranceData =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"insurance.csv"}\NormalTok{)}
+\NormalTok{googleData =}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"RegionalInterestByConditionOverTime.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exploratory-data-analysis}{%
+\subsection{Exploratory Data Analysis}\label{exploratory-data-analysis}}
+
+\begin{itemize}
+\tightlist
+\item
+  First, I will explore the insurance data. I start this process by
+  viewing the first 6 records.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(insuranceData, }\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   age    sex    bmi children smoker    region   charges
+## 1  19 female 27.900        0    yes southwest 16884.924
+## 2  18   male 33.770        1     no southeast  1725.552
+## 3  28   male 33.000        3     no southeast  4449.462
+## 4  33   male 22.705        0     no northwest 21984.471
+## 5  32   male 28.880        0     no northwest  3866.855
+## 6  31 female 25.740        0     no southeast  3756.622
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Next I will plot some graphs to see the trends within insurance data.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{costbyRegion <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(insuranceData, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ region, }\DataTypeTok{y =}\NormalTok{ charges)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_boxplot}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{(}\DataTypeTok{fill =} \StringTok{"#4271AE"}\NormalTok{, }\DataTypeTok{alpha =} \FloatTok{.7}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme_bw}\NormalTok{()}
+
+\NormalTok{costbyRegion}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Stat184FinalProjLeahMiller_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{facetCosts <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{insuranceData,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{age,}\DataTypeTok{y=}\NormalTok{charges))}\OperatorTok{+}\KeywordTok{geom_point}\NormalTok{()}\OperatorTok{+}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{colour=}\NormalTok{smoker)}\OperatorTok{+}\KeywordTok{scale_x_log10}\NormalTok{()}\OperatorTok{+}\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{region,}\DataTypeTok{ncol=}\DecValTok{4}\NormalTok{) }
+\CommentTok{### add captions}
+
+\NormalTok{facetCosts}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Stat184FinalProjLeahMiller_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Next I will explore the google data. I will simply start by viewing
+  the data table.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{head}\NormalTok{(googleData,}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                  dma geoCode X2004.cancer X2004.cardiovascular
+## 1 Portland-Auburn ME     500           44                    6
+## 2        New York NY     501           47                    6
+## 3      Binghamton NY     502           48                    3
+## 4           Macon GA     503           44                   14
+## 5    Philadelphia PA     504           52                    7
+## 6         Detroit MI     505           47                    6
+##   X2004.stroke X2004.depression X2004.rehab X2004.vaccine X2004.diarrhea
+## 1           17               39          21            31             14
+## 2           13               38          16            33             12
+## 3           16               50          12            37             24
+## 4           14               37          19            49             14
+## 5           16               41          23            36             14
+## 6           16               45          14            31             15
+##   X2004.obesity X2004.diabetes X2005.cancer X2005.cardiovascular
+## 1            29             38           70                   16
+## 2            27             32           63                   15
+## 3            31             37           62                    8
+## 4            29             31           55                   25
+## 5            30             37           73                   17
+## 6            27             34           66                   14
+##   X2005.stroke X2005.depression X2005.rehab X2005.vaccine X2005.diarrhea
+## 1           38               11          27            36             26
+## 2           35               10          22            29             23
+## 3           44               13          25            21             23
+## 4           48               10          29            33             22
+## 5           39               12          32            33             24
+## 6           43               11          20            27             22
+##   X2005.obesity X2005.diabetes X2006.cancer X2006.cardiovascular
+## 1            14             23           55                   23
+## 2            15             19           49                   18
+## 3            24             18           54                   19
+## 4            23             22           44                   24
+## 5            18             23           57                   24
+## 6            18             20           52                   21
+##   X2006.stroke X2006.depression X2006.rehab X2006.vaccine X2006.diarrhea
+## 1           26               25          38            48             48
+## 2           18               20          26            38             37
+## 3           26               27          20            35             34
+## 4           23               18          39            50             46
+## 5           23               23          40            42             44
+## 6           23               24          27            34             38
+##   X2006.obesity X2006.diabetes X2007.cancer X2007.cardiovascular
+## 1            19             44           70                   31
+## 2            22             33           64                   29
+## 3            30             26           61                   20
+## 4            29             39           65                   42
+## 5            24             40           72                   34
+## 6            25             36           68                   36
+##   X2007.stroke X2007.depression X2007.rehab X2007.vaccine X2007.diarrhea
+## 1           56               38          37            42             22
+## 2           43               34          36            41             18
+## 3           56               43          28            45             25
+## 4           54               35          40            42             16
+## 5           49               38          46            47             21
+## 6           57               38          31            37             20
+##   X2007.obesity X2007.diabetes X2008.cancer X2008.cardiovascular
+## 1            24             56           68                   22
+## 2            26             48           64                   18
+## 3            43             54           65                   15
+## 4            36             48           66                   23
+## 5            31             55           75                   23
+## 6            30             50           67                   25
+##   X2008.stroke X2008.depression X2008.rehab X2008.vaccine X2008.diarrhea
+## 1           66               28          79            23             53
+## 2           48               28          54            23             46
+## 3           62               37          57            29             85
+## 4           58               32          76            24             59
+## 5           59               30          72            27             57
+## 6           63               33          52            23             53
+##   X2008.obesity X2008.diabetes X2009.cancer X2009.cardiovascular
+## 1            20             43           61                   20
+## 2            21             37           58                   18
+## 3            28             41           58                   19
+## 4            32             44           53                   36
+## 5            25             45           65                   23
+## 6            23             43           61                   27
+##   X2009.stroke X2009.depression X2009.rehab X2009.vaccine X2009.diarrhea
+## 1           60               20          47            40             59
+## 2           44               19          39            36             49
+## 3           59               25          36            43             68
+## 4           53               19          59            24             48
+## 5           50               21          52            40             57
+## 6           57               20          39            38             54
+##   X2009.obesity X2009.diabetes X2010.cancer X2010.cardiovascular
+## 1            38             56           65                   45
+## 2            34             53           62                   38
+## 3            54             49           64                   34
+## 4            41             57           62                   49
+## 5            40             63           70                   49
+## 6            38             58           68                   57
+##   X2010.stroke X2010.depression X2010.rehab X2010.vaccine X2010.diarrhea
+## 1           44               29          63            45             31
+## 2           33               24          51            42             26
+## 3           49               34          44            46             37
+## 4           46               26          70            41             29
+## 5           39               28          72            49             31
+## 6           43               28          54            42             27
+##   X2010.obesity X2010.diabetes X2011.cancer X2011.cardiovascular
+## 1            26             37           65                   41
+## 2            26             34           56                   28
+## 3            41             31           60                   27
+## 4            34             41           59                   43
+## 5            29             41           66                   40
+## 6            29             39           58                   45
+##   X2011.stroke X2011.depression X2011.rehab X2011.vaccine X2011.diarrhea
+## 1           64               63          72            64             61
+## 2           47               51          61            51             55
+## 3           53               66          56            48             73
+## 4           54               56          69            54             54
+## 5           55               59          84            67             64
+## 6           59               56          62            53             64
+##   X2011.obesity X2011.diabetes X2012.cancer X2012.cardiovascular
+## 1            35             68           67                   42
+## 2            27             55           58                   28
+## 3            42             62           62                   29
+## 4            50             67           59                   48
+## 5            35             67           69                   39
+## 6            32             59           59                   38
+##   X2012.stroke X2012.depression X2012.rehab X2012.vaccine X2012.diarrhea
+## 1           67               74          73            68             61
+## 2           45               59          54            47             52
+## 3           54               74          47            56             68
+## 4           60               63          74            57             58
+## 5           56               69          83            62             65
+## 6           54               62          56            46             59
+##   X2012.obesity X2012.diabetes X2013.cancer X2013.cardiovascular
+## 1            46             65           71                   34
+## 2            40             52           64                   29
+## 3            61             63           68                   34
+## 4            67             67           62                   45
+## 5            51             61           75                   36
+## 6            41             52           66                   38
+##   X2013.stroke X2013.depression X2013.rehab X2013.vaccine X2013.diarrhea
+## 1           75               78          67            70             64
+## 2           51               60          52            60             58
+## 3           70               78          42            66             65
+## 4           68               67          65            60             62
+## 5           62               66          77            69             68
+## 6           63               65          57            58             65
+##   X2013.obesity X2013.diabetes X2014.cancer X2014.cardiovascular
+## 1            52             66           79                   44
+## 2            44             58           71                   33
+## 3            52             70           80                   36
+## 4            62             64           72                   56
+## 5            51             68           81                   39
+## 6            45             62           74                   42
+##   X2014.stroke X2014.depression X2014.rehab X2014.vaccine X2014.diarrhea
+## 1           70               72          70            72             61
+## 2           45               53          58            57             56
+## 3           63               74          50            66             75
+## 4           69               60          71            53             68
+## 5           57               62          83            68             66
+## 6           59               58          64            58             65
+##   X2014.obesity X2014.diabetes X2015.cancer X2015.cardiovascular
+## 1            51             75           67                   43
+## 2            39             62           64                   36
+## 3            65             72           64                   31
+## 4            54             78           66                   60
+## 5            44             70           71                   45
+## 6            37             65           67                   40
+##   X2015.stroke X2015.depression X2015.rehab X2015.vaccine X2015.diarrhea
+## 1           61               70          67            64             68
+## 2           44               55          53            58             56
+## 3           59               69          46            73             84
+## 4           62               68          66            53             71
+## 5           51               63          77            69             67
+## 6           54               61          64            57             69
+##   X2015.obesity X2015.diabetes X2016.cancer X2016.cardiovascular
+## 1            48             73           69                   38
+## 2            46             63           68                   41
+## 3            67             75           74                   33
+## 4            60             73           63                   59
+## 5            56             72           74                   42
+## 6            46             65           66                   48
+##   X2016.stroke X2016.depression X2016.rehab X2016.vaccine X2016.diarrhea
+## 1           70               64          60            64             69
+## 2           47               53          51            64             57
+## 3           66               66          44            72             79
+## 4           65               56          69            56             66
+## 5           56               59          72            70             70
+## 6           60               58          57            61             71
+##   X2016.obesity X2016.diabetes X2017.cancer X2017.cardiovascular
+## 1            49             81           70                   37
+## 2            49             77           70                   34
+## 3            70             74           68                   24
+## 4            51             78           53                   38
+## 5            52             80           75                   35
+## 6            43             73           69                   38
+##   X2017.stroke X2017.depression X2017.rehab X2017.vaccine X2017.diarrhea
+## 1           83               64          56            76             66
+## 2           53               56          53            79             56
+## 3           71               69          44            77             78
+## 4           62               46          60            47             53
+## 5           61               62          75            84             69
+## 6           66               61          57            73             70
+##   X2017.obesity X2017.diabetes
+## 1            47             80
+## 2            52             78
+## 3            61             72
+## 4            41             66
+## 5            56             78
+## 6            45             74
+\end{verbatim}
+
+\#\# Data Cleaning - I quickly realized that this data was formatted in
+a way that is not useful. Before I begin to explore the data further
+using plots, first I must extract the most recent search data (2017).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CleanGoogleData <-}
+\StringTok{  }\NormalTok{googleData }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(dma, geoCode, X2017.cancer, X2017.cardiovascular, X2017.depression, X2017.stroke, X2017.rehab, X2017.vaccine, X2017.obesity, X2017.diarrhea)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Next I will use regular expressions to extract the State Abbreviation
+  from the location. Then I use mutate to apply the regular expression
+  to all of the addresses. At this point I also drop the ``geoCode''
+  column because it is not needed.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{address <-}\StringTok{ "Philadelphia PA"}
+
+\NormalTok{stateAbbr <-}\StringTok{ }\KeywordTok{str_extract}\NormalTok{(address, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{b[A-Z]\{2\}"}\NormalTok{)}
+
+\NormalTok{CleanGoogleData <-}\StringTok{ }\NormalTok{CleanGoogleData }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(}\OperatorTok{-}\NormalTok{geoCode) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{dma =} \KeywordTok{str_extract}\NormalTok{(dma, }\StringTok{"}\CharTok{\textbackslash{}\textbackslash{}}\StringTok{b[A-Z]\{2\}"}\NormalTok{))}
+
+\KeywordTok{head}\NormalTok{(CleanGoogleData, }\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   dma X2017.cancer X2017.cardiovascular X2017.depression X2017.stroke
+## 1  ME           70                   37               64           83
+## 2  NY           70                   34               56           53
+## 3  NY           68                   24               69           71
+## 4  GA           53                   38               46           62
+## 5  PA           75                   35               62           61
+## 6  MI           69                   38               61           66
+##   X2017.rehab X2017.vaccine X2017.obesity X2017.diarrhea
+## 1          56            76            47             66
+## 2          53            79            52             56
+## 3          44            77            61             78
+## 4          60            47            41             53
+## 5          75            84            56             69
+## 6          57            73            45             70
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Our data is almost clean. Since all of this data is from 2017 I am
+  going to reformat year into its own column. Then, I will add a column
+  called ``region'' to the google data. This will be useful when
+  comparing this data to the insurance data which is also grouped by
+  region.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gatheredData <-}\StringTok{ }\KeywordTok{melt}\NormalTok{(CleanGoogleData, }\DataTypeTok{id.vars =} \StringTok{"dma"}\NormalTok{, }\DataTypeTok{variable =} \StringTok{'condition'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in melt(CleanGoogleData, id.vars = "dma", variable = "condition"):
+## The melt generic in data.table has been passed a data.frame and will
+## attempt to redirect to the relevant reshape2 method; please note that
+## reshape2 is deprecated, and this redirection is now deprecated as
+## well. To continue using melt methods from reshape2 while both libraries
+## are attached, e.g. melt.list, you can prepend the namespace like
+## reshape2::melt(CleanGoogleData). In the next version, this warning will
+## become an error.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gatheredData <-}\StringTok{ }\NormalTok{gatheredData }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{year =} \StringTok{'2017'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{condition =} \KeywordTok{gsub}\NormalTok{(}\StringTok{'X2017.'}\NormalTok{,}\StringTok{''}\NormalTok{,condition))}
+
+\KeywordTok{head}\NormalTok{(gatheredData, }\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   dma condition value year
+## 1  ME    cancer    70 2017
+## 2  NY    cancer    70 2017
+## 3  NY    cancer    68 2017
+## 4  GA    cancer    53 2017
+## 5  PA    cancer    75 2017
+## 6  MI    cancer    69 2017
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Now I will group by state so I can do analysis on a state level. Then,
+  I will add a column called ``region'' to the google data. This will be
+  useful when comparing this data to the insurance data which is also
+  grouped by region.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{StateGoogleData <-}
+\StringTok{  }\NormalTok{gatheredData }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(dma, condition) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{ (}\DataTypeTok{total =} \KeywordTok{sum}\NormalTok{(value))}
+
+\KeywordTok{head}\NormalTok{(StateGoogleData, }\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 3
+## # Groups:   dma [1]
+##   dma   condition      total
+##   <chr> <chr>          <int>
+## 1 AK    cancer           167
+## 2 AK    cardiovascular    33
+## 3 AK    depression       176
+## 4 AK    diarrhea         217
+## 5 AK    obesity          101
+## 6 AK    rehab             79
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{Note} There are only 4 regions included in Insurance data due to
+  what was surveyed in the study. Due to this, I will be only including
+  those regions for the google data so the comparison is equal. This
+  excludes certain states like Alaska who are in the far north region.
+  They will be labeled with an NA and then ommitted from the dataset.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{StateGoogleData <-}
+\StringTok{  }\NormalTok{gatheredData }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(dma, condition) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{ (}\DataTypeTok{total =} \KeywordTok{sum}\NormalTok{(value))}
+
+\CommentTok{#head(StateGoogleData, 6)}
+
+\NormalTok{southwest <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'AZ'}\NormalTok{,}\StringTok{'CA'}\NormalTok{,}\StringTok{'NM'}\NormalTok{,}\StringTok{'NV'}\NormalTok{,}\StringTok{'OK'}\NormalTok{,}\StringTok{'TX'}\NormalTok{)}
+\NormalTok{southeast <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'AL'}\NormalTok{,}\StringTok{'AR'}\NormalTok{,}\StringTok{'DE'}\NormalTok{,}\StringTok{'FL'}\NormalTok{,}\StringTok{'GA'}\NormalTok{,}\StringTok{'KY'}\NormalTok{,}\StringTok{'LA'}\NormalTok{,}\StringTok{'MD'}\NormalTok{,}\StringTok{'DC'}\NormalTok{,}\StringTok{'MS'}\NormalTok{,}\StringTok{'MC'}\NormalTok{,}\StringTok{'SC'}\NormalTok{)}
+\NormalTok{northwest <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'CA'}\NormalTok{, }\StringTok{'CO'}\NormalTok{, }\StringTok{'ID'}\NormalTok{, }\StringTok{'MT'}\NormalTok{, }\StringTok{'ND'}\NormalTok{, }\StringTok{'NE'}\NormalTok{, }\StringTok{'NV'}\NormalTok{, }\StringTok{'OR'}\NormalTok{, }\StringTok{'SD'}\NormalTok{, }\StringTok{'UT'}\NormalTok{, }\StringTok{'WA'}\NormalTok{, }\StringTok{'WY'}\NormalTok{)}
+\NormalTok{northeast <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{'CT'}\NormalTok{,}\StringTok{'IA'}\NormalTok{,}\StringTok{'IL'}\NormalTok{,}\StringTok{'IN'}\NormalTok{,}\StringTok{'KS'}\NormalTok{,}\StringTok{'MA'}\NormalTok{,}\StringTok{'ME'}\NormalTok{,}\StringTok{'MI'}\NormalTok{,}\StringTok{'MN'}\NormalTok{,}\StringTok{'MO'}\NormalTok{,}\StringTok{'NH'}\NormalTok{,}\StringTok{'NJ'}\NormalTok{,}\StringTok{'NY'}\NormalTok{,}\StringTok{'OH'}\NormalTok{,}\StringTok{'PA'}\NormalTok{,}\StringTok{'RI'}\NormalTok{,}\StringTok{'SD'}\NormalTok{,}\StringTok{'VA'}\NormalTok{,}\StringTok{'VT'}\NormalTok{,}\StringTok{'WI'}\NormalTok{, }\StringTok{'WV'}\NormalTok{)}
+
+\NormalTok{RegionalGoogleData <-}
+\StringTok{  }\NormalTok{StateGoogleData }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{region =} \KeywordTok{ifelse}\NormalTok{(dma }\OperatorTok{%in%}\StringTok{ }\NormalTok{southwest, }\StringTok{"southwest"}\NormalTok{,}
+                                     \KeywordTok{ifelse}\NormalTok{(dma }\OperatorTok{%in%}\StringTok{ }\NormalTok{southeast, }\StringTok{"southeast"}\NormalTok{,}
+                                            \KeywordTok{ifelse}\NormalTok{(dma }\OperatorTok{%in%}\StringTok{ }\NormalTok{northwest, }\StringTok{"northwest"}\NormalTok{,}
+                                                   \KeywordTok{ifelse}\NormalTok{(dma }\OperatorTok{%in%}\StringTok{ }\NormalTok{northeast, }\StringTok{"northeast"}\NormalTok{, }\OtherTok{NA}\NormalTok{)))))}
+
+\NormalTok{RegionalGoogleData <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(RegionalGoogleData)}
+\KeywordTok{head}\NormalTok{(RegionalGoogleData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 4
+## # Groups:   dma [1]
+##   dma   condition      total region   
+##   <chr> <chr>          <int> <chr>    
+## 1 AL    cancer           334 southeast
+## 2 AL    cardiovascular   245 southeast
+## 3 AL    depression       304 southeast
+## 4 AL    diarrhea         379 southeast
+## 5 AL    obesity          234 southeast
+## 6 AL    rehab            349 southeast
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Here is some analysis of the 2017 google data.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# searches by state}
+
+
+
+\CommentTok{#searches by region}
+\NormalTok{RegionSearches <-}
+\StringTok{  }\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data=}\NormalTok{RegionalGoogleData,}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\KeywordTok{reorder}\NormalTok{(condition,total),}\DataTypeTok{y=}\NormalTok{total ,}\DataTypeTok{fill=}\NormalTok{condition))}\OperatorTok{+}\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat=}\StringTok{'identity'}\NormalTok{,}\DataTypeTok{position=}\StringTok{'stack'}\NormalTok{, }\DataTypeTok{width=}\NormalTok{.}\DecValTok{9}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.title.x=}\KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{axis.text.x=}\KeywordTok{element_blank}\NormalTok{(),}
+        \DataTypeTok{axis.ticks.x=}\KeywordTok{element_blank}\NormalTok{()) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{region,}\DataTypeTok{ncol=}\DecValTok{2}\NormalTok{) }
+
+\NormalTok{RegionSearches}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Stat184FinalProjLeahMiller_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+
+\end{document}
