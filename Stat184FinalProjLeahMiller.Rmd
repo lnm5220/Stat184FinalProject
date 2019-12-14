@@ -62,7 +62,7 @@ facetCosts
 head(googleData,6)
 ```
  
- ## Data Cleaning
+## Data Cleaning
 - I quickly realized that this data was formatted in a way that is not useful. Before I begin to explore the data further using plots, first I must extract the most recent search data (2017).
 
 ```{r}
