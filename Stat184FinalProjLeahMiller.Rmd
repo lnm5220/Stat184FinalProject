@@ -21,6 +21,7 @@ library(DataComputing)
 library(data.table)
 library(tidyr)
 library(dplyr)
+library(png)
 ```
 ***
 
@@ -91,10 +92,6 @@ CleanGoogleData <-
 - Next I will use regular expressions to extract the State Abbreviation from the location. Then I use mutate to apply the regular expression to all of the addresses. At this point I also drop the "geoCode" column because it is not needed.
 
 ```{r}
-address <- "Philadelphia PA"
-
-stateAbbr <- str_extract(address, "\\b[A-Z]{2}")
-
 CleanGoogleData <- CleanGoogleData %>% 
   select(-geoCode) %>% 
   mutate(dma = str_extract(dma, "\\b[A-Z]{2}"))
@@ -165,8 +162,9 @@ StateSearches <-
   ggplot(data = RegionalGoogleData, aes(x= condition, y= State)) +
   geom_tile(aes(fill=searchesPer)) +
   scale_fill_gradient2(low='white',mid='#5DADE2',high='black',midpoint=20) + 
-  labs(title ="Searches by State (Per 100,000)",x = "Condition", y = "State", fill="Total Searches")+
-  theme(plot.title = element_text(face = "bold", hjust = 0.5),
+  labs(title ="Searches by State (Per 100,000)",x = "Condition", y = "State", fill="Searches Per 100,000")+
+  theme(axis.text.x = element_text(angle=45),
+        plot.title = element_text(face = "bold", hjust = 0.5),
         plot.caption = element_text(hjust = 0))
 
 StateSearches
@@ -184,7 +182,6 @@ RegionSearches <-
         plot.title = element_text(face = "bold", hjust = 0.5),
         plot.caption = element_text(hjust = 0))
 
-RegionSearches
 ```
 
 # Joining the two tables
@@ -212,6 +209,14 @@ JoinedTable <- merge(RegionalGoogleData, insuranceData, by = 'region', type = "f
 head(JoinedTable)
 ```
 
+# More Visualization
+
+```{R}
+JoinedPlot <- ggplot(data=JoinedTable,aes(x=total_searches,y=total_charges))+geom_point()+aes(colour=region)+scale_x_log10() 
+
+JoinedPlot
+
+```
 
 
 
