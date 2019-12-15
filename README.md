@@ -4,32 +4,6 @@ By Leah Miller
 
 **Research topic**: The correlation between health insurance charges and health condition google searches.
 
----
-title: "Stat 184 Final Project"
-author: "Leah Miller"
-date: "Due December 16, 2019"
-output:
-  html_notebook: default
-  pdf_document: default
----
-
-***
-**Set up** Clean up environment & load packages:
-```{r}
-rm(list = ls())
-library(rvest)
-library(tidyverse)
-library(lubridate)
-library(knitr)
-library(ggplot2)
-library(DataComputing)
-library(data.table)
-library(tidyr)
-library(dplyr)
-library(png)
-```
-***
-
 # The Data
 
 > For this project I chose to work with data that was related to healthcare in some sense. I used two datasets, the first being an insurance dataset that shows billed charges for Americans dependent on a few factors like region, bmi, and sex. That dataset can be found here: [Insurance Data Link](https://www.kaggle.com/mirichoi0218/insurance)
