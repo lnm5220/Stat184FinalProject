@@ -20,10 +20,10 @@ output:
 *Description: (1) Analysis includes at least two different data sources. (2) Primary data source may NOT be loaded from an R package--though supporting data may. (3) Access to all data sources is contained within the analysis. (4) Imported data is inspected at beginning of analysis using one or more R functions: e.g., str, glimpse, head, tail, names, nrow, etc*
 
 (A) .Rmd Line numbers where at least two different data sources are imported:  
-
+- 34, 35
 
 (B) .Rmd Line numbers for inspecting data intake:  
-
+- 42, 79
 
 ### Data Wrangling (5 out of 8 required)
 
@@ -31,19 +31,23 @@ output:
 
 
 (A) .Rmd Line number(s) for general data wrangling: 
-
+- line 88: select
+- line 108: mutate
+- line 121: groupby
 
 (B) .Rmd Line number(s) for a join operation: 
-
+- line 208: merge
 
 (C) .Rmd Line number(s) for a spread or gather operation (or equivalent):
-
+- line 105: melt
 
 (D) .Rmd Line number(s) for use of regular expressions: 
-
+- line 97
 
 (E) .Rmd Line number(s) for use of reduction and/or transformation functions: 
-
+- line 122: sum
+- line 195: mean
+- line 202: mean
 
 (F) .Rmd Line number(s) for use of user-defined functions: 
 
@@ -61,10 +65,17 @@ output:
 
 
 (A) .Rmd Line number(s) for use of mulitple different geoms:  
+- line 48: boxplot
+- line 61: scatter plot
+- line 161: tile graph
 
 (B) .Rmd Line number(s) for use of multiple aesthetics:  
+- line 50: color & alpha
+- line 177: facets
+- line 218: shape & color
 
 (C) .Rmd Line number(s) for use of layered graphics:  
+- line 63: scatter with geom smooth
 
 (D) .Rmd Line number(s) for use of leaflet maps:  
 
