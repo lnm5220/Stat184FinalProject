@@ -36,8 +36,8 @@ library(png)
 
 Here I read in the CSV Files:
 ```{r}
-insuranceData = read.csv("insurance.csv")
-googleData = read.csv("RegionalInterestByConditionOverTime.csv")
+insuranceData = read.csv("insurance.csv", fileEncoding="UTF-8-BOM")
+googleData = read.csv("RegionalInterestByConditionOverTime.csv", fileEncoding="UTF-8-BOM")
 ```
 
 
